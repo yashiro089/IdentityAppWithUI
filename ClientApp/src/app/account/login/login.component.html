@@ -1,0 +1,56 @@
+<div class="d-flex justify-content-center">
+  <div class="col-12 col-lg-5">
+    <main class="form-signin">
+      <form [formGroup]="loginForm" (ngSubmit)="login()" autocomplete="on">
+        <div class="text-center mb-4">
+          <h3 class="mb-3 font-weight-normal">Login</h3>
+        </div>
+
+        <!-- Username -->
+        <div class="form-floating mb-3">
+          <input formControlName="userName" type="text" placeholder="Username(your email address)" class="form-control"
+          [class.is-invalid]="submitted && loginForm.get('userName')?.errors"
+          />
+          <label for="userName">Username(your email address)</label>
+          <span class="text-danger" *ngIf="submitted && loginForm.get('userName')?.hasError('required')">
+            Username is required
+          </span>
+        </div>
+
+        <!-- Password -->
+        <div class="form-floating mb-3">
+          <input formControlName="password" type="password" placeholder="Password" class="form-control"
+          [class.is-invalid]="submitted && loginForm.get('password')?.errors"
+          />
+          <label for="password">Password</label>
+          <span class="text-danger" *ngIf="submitted && loginForm.get('password')?.hasError('required')">
+            Password is required
+          </span>
+          <span class="text-danger" *ngIf="submitted &&
+          loginForm.get('password')?.hasError('minlength') || loginForm.get('password')?.hasError('maxlength')">
+          "Password must be at least 6 and maximum of 30 characters"
+        </span>
+        </div>
+
+        <!-- Get All messages -->
+        <div class="form-floating" *ngIf="errorMessages.length > 0">
+          <app-validation-messages [errorMessages]="errorMessages"></app-validation-messages>
+          <a class="btn btn-link"(click)="resendEmailConfirmationLink()" *ngIf="errorMessages[0].includes('Please confirm your email')">
+            Click here to resend email confirmation link
+          </a>
+        </div>
+
+        <!-- Login Button -->
+        <div class="d-grid mt-4 px-1">
+          <button class="btn btn-lg btn-info" type="submit">Login</button>
+        </div>
+      </form>
+
+      <div class="mt-4 text-center">
+        <a href="" class="btn btn-link" routerLink="/account/send-email/forgot-username-or-password">
+          <h6>Forgot username or password?</h6>
+        </a>
+      </div>
+    </main>
+  </div>
+</div>
